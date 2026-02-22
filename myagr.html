@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>My AGR — Redirection...</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: linear-gradient(135deg, #1a1a2e, #0f3460);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0;
+    }
+    .card {
+      background: #fff;
+      border-radius: 20px;
+      padding: 40px 32px;
+      max-width: 400px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 20px 60px rgba(0,0,0,.3);
+    }
+    .spinner {
+      width: 48px;
+      height: 48px;
+      border: 5px solid #e2e8f0;
+      border-top-color: #3b82f6;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 20px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    h2 { color: #1a1a2e; font-size: 1.2rem; margin-bottom: 8px; }
+    p  { color: #6b7d96; font-size: .87rem; }
+    .err { display:none; background:#f8d7da; color:#721c24; border-radius:10px; padding:14px; margin-top:16px; font-size:.85rem; }
+  </style>
+</head>
+<body>
+<div class="card">
+  <div style="font-size:2rem;margin-bottom:16px">🇬🇳 🤝 🍁</div>
+  <div class="spinner"></div>
+  <h2>Connexion à My AGR...</h2>
+  <p>Vous allez être redirigé vers votre espace membre.</p>
+  <div class="err" id="err">
+    ⚠️ Token manquant. Utilisez le lien reçu par email.
+  </div>
+</div>
+
+<script>
+  // URL de votre Apps Script — À MODIFIER
+  var WEBAPP_URL = 'https://script.google.com/macros/s/AKfycbzTOoOrzstmpvdQ7Sg_HAMHNqVyX3N3_0VcjvMI6CDyKnDh0KY0JP9KroK4DuRuBCQUWg/exec';
+
+  // Lire le token depuis l'URL de cette page
+  var params = new URLSearchParams(window.location.search);
+  var token  = params.get('token');
+
+  if (token) {
+    // Rediriger vers Apps Script avec le token
+    window.location.href = WEBAPP_URL + '?action=myagr&token=' + token;
+  } else {
+    document.querySelector('.spinner').style.display = 'none';
+    document.getElementById('err').style.display = 'block';
+  }
+</script>
+</body>
+</html>
